@@ -1,8 +1,10 @@
 import os
 import sys
+import base64
 import numpy as np
 import pandas as pd
 import streamlit as st
+from datetime import datetime
 import matplotlib.pyplot as plt
 
 from worldometers import WorldometersHTMLDataParser
@@ -11,13 +13,30 @@ from visualization_utils import get_pie_chart_multi_categories
 url_to_parse = "https://www.worldometers.info/coronavirus/"
 
 def country_wise(df_parsed):
-    st.title("Country-wise data")
-    
+    st.title("Countrywise covid-19 data")
+    st.write(df_parsed)
+
+    csv_file = df_parsed.to_csv(index=False)
+    byte_file = base64.b64encode(csv_file.encode()).decode()
+    date_time_string = datetime.now().isoformat(sep="_")[:-7].replace(":", "-")
+    csv_file_name = f"{date_time_string}_covid19_worldometers.csv"
+    href = f"<a href='data:file/csv;base64,{byte_file}' download={csv_file_name}>Download as csv file</a>"
+    st.markdown(href, unsafe_allow_html=True)
+
+    st.header("World covid-19 stats")
+    total_cases_world = np.sum(df_parsed.TotalCases.to_numpy().astype(np.int32))
+    total_deceased_world = np.sum(df_parsed.TotalDeaths.to_numpy().astype(np.int32))
+    mortality_rate_world = np.around(100 * total_deceased_world / total_cases_world, 4)
+    st.write(f"Total cases : {total_cases_world}")
+    st.write(f"Total deceased : {total_deceased_world}")
+    st.write(f"Mortality rate : {mortality_rate_world}")
+
+
     return
 
 def continent_wise(df_parsed):
     fig_1, fig_2 = None, None
-    st.title("Continent-wise data")
+    st.title("Continentwise covid-19 data")
     #st.write(df_parsed)
     continents = np.unique(df_parsed.Continent.to_numpy())
     selected_continent = st.sidebar.selectbox("Select continent", continents, index=1)
