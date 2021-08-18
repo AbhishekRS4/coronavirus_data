@@ -1,14 +1,9 @@
-# Covid-19 data
+# Covid-19 worldometers data
 
+## Visualizer for analysis of reported covid-19 data for the world
+* The source of data is as compiled by [Worldometers](https://www.worldometers.info/coronavirus/)
 
-## Countrywise Data Source
-* Data is saved from [Worldometers website](https://www.worldometers.info/coronavirus/)
-
-
-## India Statewise Data Source
-* Data is saved from [Ministry of Health and Family Welfare Website](https://www.mohfw.gov.in)
-
-
-## Important
-* Date and timestamps are in ISO format
-* Saving the data from India
+## Instructions to run the visualizer
+```
+streamlit run src/visualizer_app.py
+```
