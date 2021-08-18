@@ -27,10 +27,9 @@ def country_wise(df_parsed):
     total_cases_world = np.sum(df_parsed.TotalCases.to_numpy().astype(np.int32))
     total_deceased_world = np.sum(df_parsed.TotalDeaths.to_numpy().astype(np.int32))
     mortality_rate_world = np.around(100 * total_deceased_world / total_cases_world, 4)
-    st.write(f"Total cases : {total_cases_world}")
-    st.write(f"Total deceased : {total_deceased_world}")
-    st.write(f"Mortality rate : {mortality_rate_world}")
-
+    st.write(f"Total cases : {total_cases_world} ({total_cases_world/10**6:.2f}M)")
+    st.write(f"Total deceased : {total_deceased_world} ({total_deceased_world/10**6:.2f}M)")
+    st.write(f"Mortality rate : {mortality_rate_world} %")
 
     return
 
@@ -44,6 +43,14 @@ def continent_wise(df_parsed):
 
     df_continent = df_parsed[df_parsed["Continent"] == selected_continent]
     st.write(df_continent)
+
+    st.header(f"{selected_continent} covid-19 stats")
+    total_cases_continent = np.sum(df_continent.TotalCases.to_numpy().astype(np.int32))
+    total_deceased_continent = np.sum(df_continent.TotalDeaths.to_numpy().astype(np.int32))
+    mortality_rate_continent = np.around(100 * total_deceased_continent / total_cases_continent, 4)
+    st.write(f"Total cases : {total_cases_continent} ({total_cases_continent/10**6:.2f}M)")
+    st.write(f"Total deceased : {total_deceased_continent} ({total_deceased_continent/10**6:.2f}M)")
+    st.write(f"Mortality rate : {mortality_rate_continent} %")
 
     fig_1 = get_pie_chart_multi_categories(df_continent.TotalCases.to_numpy(),
         df_continent["Country,Other"].to_numpy(),
