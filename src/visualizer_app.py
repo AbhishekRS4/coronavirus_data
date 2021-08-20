@@ -11,8 +11,9 @@ from worldometers import WorldometersHTMLDataParser
 from visualization_utils import get_pie_chart_multi_categories
 
 url_to_parse = "https://www.worldometers.info/coronavirus/"
+df_parsed = None
 
-def country_wise(df_parsed):
+def country_wise():
     st.title("Countrywise covid-19 data")
     st.write(df_parsed)
 
@@ -33,7 +34,7 @@ def country_wise(df_parsed):
 
     return
 
-def continent_wise(df_parsed):
+def continent_wise():
     fig_1, fig_2 = None, None
     st.title("Continentwise covid-19 data")
     #st.write(df_parsed)
@@ -93,10 +94,11 @@ def start_visualizer():
     worldometers_parser.preprocess_worldometers_covid_table()
     worldometers_parser.parse_numeric_data()
     worldometers_parser.calculate_mortality_rate()
+    global df_parsed
     df_parsed = worldometers_parser._data_frame_parsed
 
     selected_mode = st.sidebar.selectbox("Select mode", list(modes.keys()))
-    modes[selected_mode](df_parsed)
+    modes[selected_mode]()
     return
 
 def main():
