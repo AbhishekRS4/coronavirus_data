@@ -44,6 +44,13 @@ def continent_wise(df_parsed):
     df_continent = df_parsed[df_parsed["Continent"] == selected_continent]
     st.write(df_continent)
 
+    csv_file = df_continent.to_csv(index=False)
+    byte_file = base64.b64encode(csv_file.encode()).decode()
+    date_time_string = datetime.now().isoformat(sep="_")[:-7].replace(":", "-")
+    csv_file_name = f"{date_time_string}_{selected_continent.replace(' ', '_').replace('/', '_').lower()}_covid19_worldometers.csv"
+    href = f"<a href='data:file/csv;base64,{byte_file}' download={csv_file_name}>Download as csv file</a>"
+    st.markdown(href, unsafe_allow_html=True)
+
     st.header(f"{selected_continent} covid-19 stats")
     total_cases_continent = np.sum(df_continent.TotalCases.to_numpy().astype(np.int32))
     total_deceased_continent = np.sum(df_continent.TotalDeaths.to_numpy().astype(np.int32))
