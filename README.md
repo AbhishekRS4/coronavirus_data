@@ -1,7 +1,7 @@
 # Covid-19 Worldometers data
 
 ## Visualizer for analysis of reported covid-19 data for the world
-* The source of data is as compiled by [Worldometers](https://www.worldometers.info/coronavirus/)
+* Thanks to [Worldometers](https://www.worldometers.info/coronavirus/) for collating the data
 
 ## Instructions to run the visualizer
 ```
