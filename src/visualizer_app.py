@@ -31,6 +31,7 @@ def country_wise():
     st.write(f"Total cases : {total_cases_world} ({total_cases_world/10**6:.2f}M)")
     st.write(f"Total deceased : {total_deceased_world} ({total_deceased_world/10**6:.2f}M)")
     st.write(f"Mortality rate : {mortality_rate_world} %")
+    st.markdown("_Source of data - [Worldometers](https://www.worldometers.info/coronavirus/)_")
     return
 
 def continent_wise():
@@ -74,6 +75,7 @@ def continent_wise():
 
     if fig_2 is not None:
         st.pyplot(fig_2)
+    st.markdown("_Source of data - [Worldometers](https://www.worldometers.info/coronavirus/)_")
     return
 
 def app_info():
@@ -84,9 +86,9 @@ def app_info():
     return
 
 modes = {
-    "App Info" : app_info,
     "Country-wise" : country_wise,
     "Continent-wise": continent_wise,
+    "App Info" : app_info,
 }
 
 def start_visualizer():
