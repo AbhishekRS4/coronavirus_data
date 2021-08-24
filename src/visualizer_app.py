@@ -48,9 +48,9 @@ def country_wise():
     df_top_n = df_parsed[list_stats_to_show]
     list_column_to_sort = list_stats_to_show[1:-1]
     column_selected = st.sidebar.selectbox("Select column to sort for Top-N report", list_column_to_sort, index=0)
-    ascending = st.sidebar.checkbox("Ascending", False)
+    ascending = st.sidebar.checkbox("Ascending order for Top-N report", False)
     df_top_n = df_top_n.sort_values(by=column_selected, ascending=ascending)
-    st.header(f"Top-{selected_n_countries} countries covid-19 stats sorted by {column_selected} with ascending={ascending}")
+    st.header(f"Top-{selected_n_countries} report sorted by {column_selected} with ascending={ascending}")
     st.table(df_top_n[:selected_n_countries])
 
     st.markdown("_Source of data - [Worldometers](https://www.worldometers.info/coronavirus/)_")
