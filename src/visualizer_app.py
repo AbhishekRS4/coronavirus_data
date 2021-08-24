@@ -42,6 +42,17 @@ def country_wise():
     st.write(f"Total cases : {total_cases_country} ({total_cases_country/10**6:.3f}M)")
     st.write(f"Total deceased : {total_deceased_country} ({total_deceased_country/10**6:.3f}M)")
     st.write(f"Mortality rate : {mortality_rate_country:.3f} %")
+
+    selected_n_countries = st.sidebar.slider("Select N countries for Top-N report", min_value=10, max_value=25, value=10, step=1)
+    list_stats_to_show = ["Country,Other", "TotalCases", "TotalDeaths", "MortalityRate", "TotalTests", "Population", "Continent"]
+    df_top_n = df_parsed[list_stats_to_show]
+    list_column_to_sort = list_stats_to_show[1:-1]
+    column_selected = st.sidebar.selectbox("Select column to sort for Top-N report", list_column_to_sort, index=0)
+    ascending = st.sidebar.checkbox("Ascending", False)
+    df_top_n = df_top_n.sort_values(by=column_selected, ascending=ascending)
+    st.header(f"Top-{selected_n_countries} countries covid-19 stats sorted by {column_selected} with ascending={ascending}")
+    st.table(df_top_n[:selected_n_countries])
+
     st.markdown("_Source of data - [Worldometers](https://www.worldometers.info/coronavirus/)_")
     return
 
