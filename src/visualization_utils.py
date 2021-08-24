@@ -23,5 +23,12 @@ def get_pie_chart_multi_categories(sizes, labels, plot_title, show_percent=False
         patches, labels, dummy = zip(*sorted(zip(patches, labels, sizes), key=lambda labels: labels[2], reverse=True))
 
     plt.legend(patches, labels, loc="best", fontsize=8)
+    return fig
 
+def get_bar_chart_single(data, label, title, color):
+    fig, axes = plt.subplots(1, 1, figsize=(8, 8))
+    axes.set_title(title)
+    axes.bar(np.arange(len(data)), data, label=label, color=color)
+    axes.legend()
+    axes.grid()
     return fig

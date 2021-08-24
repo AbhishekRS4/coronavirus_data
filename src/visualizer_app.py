@@ -8,7 +8,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 
 from worldometers import WorldometersHTMLDataParser
-from visualization_utils import get_pie_chart_multi_categories
+from visualization_utils import get_pie_chart_multi_categories, get_bar_chart_single
 
 url_to_parse = "https://www.worldometers.info/coronavirus/"
 df_parsed = None
@@ -35,7 +35,7 @@ def country_wise():
     return
 
 def continent_wise():
-    fig_1, fig_2 = None, None
+    fig_1, fig_2, fig_3, fig_4 = None, None, None, None
     st.title("Continentwise covid-19 data")
     #st.write(df_parsed)
     continents = np.unique(df_parsed.Continent.to_numpy())
@@ -75,6 +75,23 @@ def continent_wise():
 
     if fig_2 is not None:
         st.pyplot(fig_2)
+
+    fig_3 = get_bar_chart_single(df_continent.TotalDeaths.to_numpy(),
+        df_continent["Country,Other"].to_numpy(),
+        f"Total deceased in countries in {selected_continent} continent",
+        color="r")
+
+    if fig_3 is not None:
+        st.pyplot(fig_3)
+
+    fig_4 = get_bar_chart_single(df_continent.MortalityRate.to_numpy(),
+        df_continent["Country,Other"].to_numpy(),
+        f"Mortality Rate in countries in {selected_continent} continent",
+        color="b")
+
+    if fig_4 is not None:
+        st.pyplot(fig_4)
+
     st.markdown("_Source of data - [Worldometers](https://www.worldometers.info/coronavirus/)_")
     return
 
