@@ -27,10 +27,21 @@ def country_wise():
     st.header("World covid-19 stats")
     total_cases_world = np.sum(df_parsed.TotalCases.to_numpy().astype(np.int32))
     total_deceased_world = np.sum(df_parsed.TotalDeaths.to_numpy().astype(np.int32))
-    mortality_rate_world = np.around(100 * total_deceased_world / total_cases_world, 4)
-    st.write(f"Total cases : {total_cases_world} ({total_cases_world/10**6:.2f}M)")
-    st.write(f"Total deceased : {total_deceased_world} ({total_deceased_world/10**6:.2f}M)")
+    mortality_rate_world = np.around(100 * total_deceased_world / total_cases_world, 3)
+    st.write(f"Total cases : {total_cases_world} ({total_cases_world/10**6:.3f}M)")
+    st.write(f"Total deceased : {total_deceased_world} ({total_deceased_world/10**6:.3f}M)")
     st.write(f"Mortality rate : {mortality_rate_world} %")
+
+    countries = df_parsed["Country,Other"].to_numpy()
+    selected_country = st.sidebar.selectbox("Select Country", countries, index=0)
+    st.header(f"{selected_country} covid-19 stats")
+    df_country = df_parsed[df_parsed["Country,Other"] == selected_country]
+    total_cases_country = df_country.TotalCases.to_numpy()[0]
+    total_deceased_country = df_country.TotalDeaths.to_numpy()[0]
+    mortality_rate_country = df_country.MortalityRate.to_numpy()[0]
+    st.write(f"Total cases : {total_cases_country} ({total_cases_country/10**6:.3f}M)")
+    st.write(f"Total deceased : {total_deceased_country} ({total_deceased_country/10**6:.3f}M)")
+    st.write(f"Mortality rate : {mortality_rate_country:.3f} %")
     st.markdown("_Source of data - [Worldometers](https://www.worldometers.info/coronavirus/)_")
     return
 
